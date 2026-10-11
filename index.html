@@ -1,1 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Measure Lab – Units of Measurement (Grades 6–10)</title>
+<style>
+:root{--paper:#EEF4F3;--ink:#16262E;--muted:#55686F;--teal:#0B7A85;--ruler:#F2C230;--rd:#8A6A00;--bad:#C93C3C;--good:#1E8A4C;--line:#C5D4D3;--font:"Atkinson Hyperlegible","Trebuchet MS",Verdana,sans-serif}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font:17px/1.5 var(--font);background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:28px 28px}
+header{background:var(--ruler);border-bottom:3px solid var(--rd);position:relative;padding:14px 16px 34px}
+header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:22px;background:repeating-linear-gradient(90deg,var(--rd) 0 2px,transparent 2px 10px) bottom/100% 10px no-repeat,repeating-linear-gradient(90deg,var(--rd) 0 2px,transparent 2px 50px) bottom/100% 22px no-repeat}
+h1{margin:0;font-size:1.7rem}header p{margin:2px 0 10px;color:#3d3000}
+nav{display:flex;gap:8px;flex-wrap:wrap}
+nav button{font:inherit;font-weight:700;padding:8px 16px;border:2px solid var(--ink);background:#fff8dc;border-radius:6px 6px 0 0;cursor:pointer}
+nav button[aria-selected=true]{background:var(--ink);color:#fff}
+main{max-width:980px;margin:0 auto;padding:20px 14px 48px}
+.tab,.lab{display:none}.tab.on,.lab.on{display:block}
+.card{background:#fff;border:2px solid var(--ink);border-radius:8px;padding:16px;margin-bottom:16px}
+h2{margin:0 0 8px;font-size:1.25rem}
+.concept{border-left:6px solid var(--ruler);background:#FFF9E0;padding:8px 12px;margin:0 0 12px;border-radius:0 6px 6px 0}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:end}
+label{display:flex;flex-direction:column;font-size:.85rem;font-weight:700;color:var(--muted);gap:3px}
+input,select,.b{font:inherit;padding:8px 10px;border:2px solid var(--ink);border-radius:6px;background:#fff;color:var(--ink)}
+input[type=text],input[type=number]{width:130px}input[type=range]{padding:0;width:240px;accent-color:var(--teal)}
+.b{background:var(--teal);color:#fff;font-weight:700;cursor:pointer}.b.alt{background:#fff;color:var(--ink)}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font:inherit;padding:6px 12px;border:2px solid var(--ink);background:#fff;border-radius:6px;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--teal);color:#fff}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #1b6bff;outline-offset:2px}
+.scroll{overflow-x:auto}
+table.pv{border-collapse:collapse;margin:12px auto;min-width:560px;width:100%;text-align:center}
+.pv th{font-size:.8rem;color:var(--muted);padding:2px}.pv th b{display:block;color:var(--ink);font-size:1.05rem}
+.pv td{border:2px solid var(--ink);height:64px;font-size:2rem;font-weight:700;position:relative;width:14%}
+.pv td.z{color:#aab8b8}.pv td.f{background:#FFF3C4}.pv td.t{background:#D6F0F2}
+.pv td.pf::after,.pv td.pt::after{content:"";position:absolute;bottom:6px;right:-8px;width:13px;height:13px;border-radius:50%;z-index:2}
+.pv td.pf::after{background:var(--ink)}.pv td.pt::after{background:var(--bad)}.pv td.pf.pt::after{background:linear-gradient(90deg,var(--ink) 50%,var(--bad) 50%)}
+.legend,.small{font-size:.9rem;color:var(--muted)}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%}
+.result{font-size:1.2rem;font-weight:700;margin:6px 0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.chip{border:2px solid var(--line);border-radius:6px;padding:4px 10px;background:#fff}.chip.cur{border-color:var(--teal);background:#D6F0F2;font-weight:700}
+.rungs{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:10px 0}
+.rung{display:flex;flex-direction:column;align-items:center;padding:8px 2px!important;font-size:.8rem}.rung b{font-size:1.1rem}
+.rung[aria-pressed=true]{background:var(--teal);color:#fff}.rung.bt{background:#D6F0F2}
+.msg{min-height:1.6em;font-weight:700}.ok{color:var(--good)}.no{color:var(--bad)}
+svg{display:block;width:100%;height:auto}.wide{min-width:720px}
+.two{display:flex;gap:20px;flex-wrap:wrap;align-items:center}.two>*{flex:1 1 280px}
+.big{font-size:1.15rem;font-weight:700}
+.stat{display:flex;gap:18px;flex-wrap:wrap;font-weight:700;margin-bottom:8px}.q{font-size:1.5rem;font-weight:700;margin:10px 0}
+</style>
+</head>
+<body>
+<header>
+  <h1>Measure Lab</h1>
+  <p>Touch, slide and test. Learn how length, mass, capacity, area, volume and speed units work.</p>
+  <nav role="tablist" aria-label="Sections">
+    <button role="tab" aria-selected="true" data-t="learn">Learn</button>
+    <button role="tab" aria-selected="false" data-t="ex">Convert</button>
+    <button role="tab" aria-selected="false" data-t="ru">Read a ruler</button>
+    <button role="tab" aria-selected="false" data-t="qz">Quiz</button>
+  </nav>
+</header>
+<main>
 
+<!-- LEARN -->
+<div id="learn" class="tab on">
+  <div class="seg" id="labs" style="margin-bottom:14px"></div>
+
+  <div class="lab on card" id="l-unit">
+    <h2>Which unit fits?</h2>
+    <p class="concept">Measuring means comparing with a standard unit. Pick a unit that gives a number you can picture, usually between 1 and 1000. A coin is 2 mm thick. Saying 0.000002 km is true but unhelpful.</p>
+    <div class="seg" id="uc"></div><div class="seg" id="uo" style="margin-top:8px"></div>
+    <div class="result" id="ures"></div><div class="chips" id="uchips"></div>
+  </div>
+
+  <div class="lab card" id="l-ladder">
+    <h2>The prefix ladder</h2>
+    <p class="concept">The metric system runs on powers of 10. A prefix says how many base units a unit holds: kilo = 1000, hecto = 100, deca = 10, deci = 1/10, centi = 1/100, milli = 1/1000. Moving right to a smaller unit multiplies by 10 each step. Moving left divides by 10.</p>
+    <div class="seg" id="lc"></div>
+    <div class="rungs" id="rungs"></div>
+    <div class="result" id="lres"></div>
+  </div>
+
+  <div class="lab card" id="l-area">
+    <h2>Area: square units</h2>
+    <p class="concept">Area is the flat surface a shape covers, counted in squares. Because both sides change, area units scale by the square of the length scale: 1 cm = 10 mm, so 1 cm² = 100 mm².</p>
+    <label>Side of the square: <span id="aside"></span><input type="range" id="as" min="1" max="10" value="3"></label>
+    <div class="two"><svg id="asv" viewBox="0 0 290 290" role="img" aria-label="A square divided into square centimetres"></svg><div class="big" id="ares"></div></div>
+  </div>
+
+  <div class="lab card" id="l-vol">
+    <h2>Volume: cubic units</h2>
+    <p class="concept">Volume is the space a solid takes up, counted in cubes. Cubic units scale by the cube of the length scale. 1 cm³ holds 1 mL, and a cube 10 cm on each side (1 dm³) holds exactly 1 L.</p>
+    <label>Edge of the cube: <span id="vside"></span><input type="range" id="vs" min="1" max="10" value="4"></label>
+    <div class="two"><svg id="vsv" viewBox="0 0 320 290" role="img" aria-label="A cube built from small cubes"></svg><div class="big" id="vres"></div></div>
+  </div>
+
+  <div class="lab card" id="l-cap">
+    <h2>Capacity: how much a container holds</h2>
+    <p class="concept">Capacity is how much liquid a container holds. 1 L = 1000 mL. Pour with the slider or tap an everyday amount.</p>
+    <div class="two">
+      <svg id="csv" viewBox="0 0 200 260" role="img" aria-label="A measuring jug"></svg>
+      <div><label>Amount (mL)<input type="range" id="cs" min="0" max="2000" step="5" value="250"></label>
+      <div class="seg" id="cpre" style="margin:10px 0"></div><div class="big" id="cres"></div></div>
+    </div>
+  </div>
+
+  <div class="lab card" id="l-speed">
+    <h2>Speed: distance per time</h2>
+    <p class="concept">Speed = distance ÷ time. 1 km = 1000 m and 1 h = 3600 s, so 1 km/h = 1/3.6 m/s. Divide by 3.6 to go from km/h to m/s. Multiply by 3.6 to go back. The road below is drawn to scale, 100 m wide.</p>
+    <label>Speed (km/h)<input type="range" id="ss" min="0" max="120" value="36"></label>
+    <svg id="ssv" viewBox="0 0 740 110" class="wide" role="img" aria-label="A car on a 100 metre road"></svg>
+    <div class="row" style="margin-top:8px"><button class="b" id="splay">Start</button><button class="b alt" id="sreset">Reset</button></div>
+    <div class="big" id="sres" style="margin-top:8px"></div>
+  </div>
+</div>
+
+<!-- CONVERT -->
+<div id="ex" class="tab">
+  <div class="card"><h2>Place-value converter</h2>
+    <p class="small" style="margin-top:0">Type a number and pick two units. The digits sit in the table. Move the decimal point from the black dot to the red dot.</p>
+    <div class="row"><label>Measuring<div class="seg" id="cat"></div></label>
+    <label>Number<input type="text" id="val" value="2.5" inputmode="decimal" maxlength="9"></label>
+    <label>From<select id="from"></select></label><label>To<select id="to"></select></label></div></div>
+  <div class="card"><div class="scroll"><table class="pv" id="pv"></table></div>
+    <div class="legend"><span class="dot" style="background:var(--ink)"></span> start unit &nbsp; <span class="dot" style="background:var(--bad)"></span> new unit</div>
+    <div class="result" id="res"></div></div>
+  <div class="card"><h2>Same amount, every unit</h2><div class="chips" id="all"></div></div>
+</div>
+
+<!-- RULER -->
+<div id="ru" class="tab">
+  <div class="card"><h2>How long is the strip?</h2>
+    <p class="small" style="margin-top:0">Read both ends. The length is the right reading minus the left reading. Small marks are 1 mm, numbered marks are 1 cm.</p>
+    <div class="row"><label>Slide the strip<input type="range" id="pos" min="0" max="100" value="0"></label>
+    <label style="flex-direction:row;align-items:center;gap:6px"><input type="checkbox" id="guide"> Guide lines</label>
+    <label style="flex-direction:row;align-items:center;gap:6px"><input type="checkbox" id="rand"> Start away from zero</label>
+    <button class="b alt" id="newr">New strip</button></div></div>
+  <div class="card scroll"><svg id="rsv" class="wide" viewBox="0 0 840 150" role="img" aria-label="A strip above a ruler"></svg></div>
+  <div class="card"><div class="row"><label>Length<input type="number" id="rans" step="any" placeholder="e.g. 7.4"></label>
+    <label>Unit<select id="runit"><option>cm</option><option>mm</option></select></label><button class="b" id="rchk">Check</button></div>
+    <div class="msg" id="rmsg" aria-live="polite"></div></div>
+</div>
+
+<!-- QUIZ -->
+<div id="qz" class="tab">
+  <div class="card"><h2>Quiz</h2>
+    <div class="seg" id="lvl" style="margin-bottom:8px"></div><div class="small" id="lvlinfo"></div>
+    <div class="stat"><span id="sc"></span><span id="st"></span></div>
+    <div class="q" id="qt"></div>
+    <div class="row"><label>Your answer<input type="text" id="qa" inputmode="decimal"></label>
+    <button class="b" id="qchk">Check</button><button class="b alt" id="qhint">Hint</button><button class="b alt" id="qnext">Next</button></div>
+    <div class="msg" id="qmsg" aria-live="polite"></div></div>
+</div>
+</main>
+
+<script>
+const $=s=>document.querySelector(s),ri=(a,b)=>Math.floor(Math.random()*(b-a+1))+a,P=Math.pow;
+const fmt=x=>{x=Number(x.toPrecision(12));return(x!==0&&(Math.abs(x)<1e-6||Math.abs(x)>=1e15))?x.toExponential():x.toLocaleString('en-US',{maximumFractionDigits:10,useGrouping:false})};
+const NS='http://www.w3.org/2000/svg';
+function seg(el,items,cur,cb){el.innerHTML=items.map(([k,l])=>`<button aria-pressed="${String(k)===String(cur)}" data-k="${k}">${l}</button>`).join('');
+  el.querySelectorAll('button').forEach(b=>b.onclick=()=>{el.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));cb(b.dataset.k)})}
+const CATS={length:{n:'Length',u:['km','hm','dam','m','dm','cm','mm']},mass:{n:'Mass',u:['kg','hg','dag','g','dg','cg','mg']},capacity:{n:'Capacity',u:['kL','hL','daL','L','dL','cL','mL']}};
+const PRE=['kilo','hecto','deca','base','deci','centi','milli'],CK=Object.keys(CATS).map(k=>[k,CATS[k].n]);
+
+/* tabs */
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('nav button').forEach(x=>x.setAttribute('aria-selected',x===b));
+  document.querySelectorAll('.tab').forEach(s=>s.classList.toggle('on',s.id===b.dataset.t));});
+
+/* ===== LEARN ===== */
+const LABS=[['unit','Which unit?'],['ladder','Prefix ladder'],['area','Area'],['vol','Volume'],['cap','Capacity'],['speed','Speed']];
+const DRAW={};
+seg($('#labs'),LABS,'unit',k=>{document.querySelectorAll('.lab').forEach(l=>l.classList.toggle('on',l.id==='l-'+k));DRAW[k]();});
+
+/* which unit */
+const OBJ={length:{u:[['km',1e-3],['m',1],['cm',100],['mm',1000]],o:[['a coin’s thickness',.002],['a pencil',.18],['a door',2],['a cricket pitch',20.12],['the way to school',1500]]},
+mass:{u:[['kg',1e-3],['g',1],['mg',1000]],o:[['a grain of salt',.0006],['a paper clip',1],['an apple',150],['a school bag',5000],['a car',1.5e6]]},
+capacity:{u:[['kL',1e-3],['L',1],['mL',1000]],o:[['a drop of water',.00005],['a teaspoon',.005],['a glass',.25],['a bucket',10],['a swimming pool',5e5]]}};
+let uc='length',uo=1;
+DRAW.unit=()=>{
+  seg($('#uc'),CK,uc,k=>{uc=k;uo=1;DRAW.unit();});
+  seg($('#uo'),OBJ[uc].o.map((o,i)=>[i,o[0]]),uo,k=>{uo=+k;res();});res();
+  function res(){const C=OBJ[uc],[nm,b]=C.o[uo],v=C.u.map(([u,f])=>[u,b*f]),best=v.find(x=>x[1]>=1)||v[v.length-1];
+    $('#ures').innerHTML=`${nm} is about <span style="color:var(--teal)">${fmt(best[1])} ${best[0]}</span>`;
+    $('#uchips').innerHTML=v.map(x=>`<div class="chip ${x===best?'cur':''}">${fmt(x[1])} ${x[0]}${x===best?' ✓ easy to picture':''}</div>`).join('');}
+};
+
+/* ladder */
+let lc='length',la=null,lb=null;
+DRAW.ladder=()=>{
+  seg($('#lc'),CK,lc,k=>{lc=k;la=lb=null;DRAW.ladder();});
+  const U=CATS[lc].u,lo=Math.min(la,lb),hi=Math.max(la,lb);
+  $('#rungs').innerHTML=U.map((u,i)=>`<button class="b alt rung ${lb!==null&&i>lo&&i<hi?'bt':''}" aria-pressed="${i===la||i===lb}" data-i="${i}"><b>${u}</b>${PRE[i]}</button>`).join('');
+  $('#rungs').querySelectorAll('button').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(la===null||lb!==null){la=i;lb=null}else lb=i;DRAW.ladder();});
+  const n=lb-la,s=Math.abs(n);
+  $('#lres').innerHTML=la===null?'Tap the unit you start from.':lb===null?`Starting at ${U[la]}. Now tap the unit you want.`:
+   n===0?'Same unit, nothing changes.':`1 ${U[la]} = ${fmt(P(10,n))} ${U[lb]}<br><span class="small">${s} step${s>1?'s':''} ${n>0?'right':'left'}: ${n>0?'multiply':'divide'} by ${P(10,s)}</span>`;
+};
+
+/* area */
+DRAW.area=()=>{
+  const s=+$('#as').value,c=28,g=[`<rect x="5" y="5" width="${s*c}" height="${s*c}" fill="#D6F0F2" stroke="#16262E" stroke-width="2"/>`];
+  for(let i=1;i<s;i++)g.push(`<path d="M${5+i*c} 5v${s*c}M5 ${5+i*c}h${s*c}" stroke="#0B7A85" stroke-width="1"/>`);
+  $('#asv').innerHTML=g.join('');$('#aside').textContent=s+' cm';
+  $('#ares').innerHTML=`In cm: ${s} × ${s} = <span style="color:var(--teal)">${s*s} cm²</span><br>In mm: ${s*10} × ${s*10} = <span style="color:var(--teal)">${fmt(s*s*100)} mm²</span><br><span class="small">Each side is 10 times longer in mm, so the area is 10 × 10 = 100 times bigger.</span><br><span class="small">Big picture: 1 m² = 100 cm × 100 cm = 10 000 cm².</span>`;
+};
+$('#as').oninput=DRAW.area;
+
+/* volume */
+DRAW.vol=()=>{
+  const n=+$('#vs').value,u=18,w=n*u,dx=w*.5,dy=-w*.4,x0=15,y1=280-w,o=[];
+  const L=(a,b,c,d)=>`<path d="M${a} ${b}L${c} ${d}" stroke="#0B7A85" stroke-width="1"/>`;
+  o.push(`<polygon points="${x0},${y1} ${x0+dx},${y1+dy} ${x0+w+dx},${y1+dy} ${x0+w},${y1}" fill="#E8F7F8" stroke="#16262E" stroke-width="2"/>`);
+  o.push(`<polygon points="${x0+w},${y1} ${x0+w+dx},${y1+dy} ${x0+w+dx},${y1+dy+w} ${x0+w},${y1+w}" fill="#B9E2E6" stroke="#16262E" stroke-width="2"/>`);
+  o.push(`<rect x="${x0}" y="${y1}" width="${w}" height="${w}" fill="#D6F0F2" stroke="#16262E" stroke-width="2"/>`);
+  for(let i=1;i<n;i++){const t=i*u;
+    o.push(L(x0+t,y1,x0+t,y1+w),L(x0,y1+t,x0+w,y1+t),L(x0+t,y1,x0+t+dx,y1+dy),L(x0+w+t*.5,y1+t*-.4,x0+w+t*.5,y1+t*-.4+w),L(x0+w,y1+t,x0+w+dx,y1+t+dy));}
+  $('#vsv').innerHTML=o.join('');$('#vside').textContent=n+' cm';
+  const v=n*n*n;
+  $('#vres').innerHTML=`Volume: ${n} × ${n} × ${n} = <span style="color:var(--teal)">${fmt(v)} cm³</span><br>Capacity: ${fmt(v)} mL = ${fmt(v/1000)} L${n===10?'<br><span class="ok">This is 1 dm³, exactly 1 litre!</span>':''}<br><span class="small">If every edge doubles, the volume becomes 8 times bigger (2 × 2 × 2).</span>`;
+};
+$('#vs').oninput=DRAW.vol;
+
+/* capacity */
+DRAW.cap=()=>{
+  const ml=+$('#cs').value,h=ml/2000*200,o=[`<rect x="40" y="${240-h}" width="110" height="${h}" fill="#7CC6CE"/>`,`<path d="M40 30V240H150V30" fill="none" stroke="#16262E" stroke-width="3"/>`];
+  for(let i=0;i<=8;i++){const y=240-i*25;o.push(`<path d="M40 ${y}h${i%2?14:24}" stroke="#16262E" stroke-width="2"/>`);if(i%2===0)o.push(`<text x="156" y="${y+5}" font-size="13">${i*250}</text>`);}
+  $('#csv').innerHTML=o.join('');
+  $('#cres').innerHTML=`${fmt(ml)} mL<br>= ${fmt(ml/10)} cL<br>= ${fmt(ml/100)} dL<br>= <span style="color:var(--teal)">${fmt(ml/1000)} L</span>`;
+};
+$('#cs').oninput=DRAW.cap;
+seg($('#cpre'),[[5,'teaspoon 5 mL'],[250,'glass 250 mL'],[1500,'bottle 1.5 L']],-1,k=>{$('#cs').value=k;DRAW.cap();});
+
+/* speed */
+let sx=0,sPlay=false,sT=0,sD=0;
+function carSvg(){const x=10+sx*7;
+  let o=`<rect x="10" y="70" width="700" height="30" fill="#4b5a61"/>`;
+  for(let m=0;m<=100;m+=10)o+=`<path d="M${10+m*7} 62v8" stroke="#16262E" stroke-width="2"/><text x="${10+m*7}" y="56" font-size="12" text-anchor="middle">${m} m</text>`;
+  o+=`<g transform="translate(${x} 0)"><rect x="0" y="48" width="36" height="14" rx="4" fill="#C93C3C"/><rect x="8" y="40" width="20" height="10" rx="3" fill="#C93C3C"/><circle cx="8" cy="64" r="5" fill="#16262E"/><circle cx="28" cy="64" r="5" fill="#16262E"/></g>`;
+  $('#ssv').innerHTML=o;}
+DRAW.speed=()=>{const v=+$('#ss').value,ms=v/3.6;carSvg();
+  $('#sres').innerHTML=`${v} km/h ÷ 3.6 = <span style="color:var(--teal)">${fmt(ms)} m/s</span><br>In 1 second: ${fmt(ms)} m &nbsp;|&nbsp; In 1 hour: ${v} km<br><span class="small">Distance driven since reset: ${fmt(sD)} m in ${fmt(sT)} s</span>`;};
+$('#ss').oninput=DRAW.speed;
+$('#splay').onclick=()=>{sPlay=!sPlay;$('#splay').textContent=sPlay?'Pause':'Start';last=performance.now();};
+$('#sreset').onclick=()=>{sx=sT=sD=0;DRAW.speed();};
+let last=performance.now();
+(function loop(t){const dt=Math.min((t-last)/1000,.1);last=t;
+  if(sPlay&&$('#l-speed').classList.contains('on')&&$('#learn').classList.contains('on')){const ms=+$('#ss').value/3.6;sx=(sx+ms*dt)%100;sD+=ms*dt;sT+=dt;DRAW.speed();}
+  requestAnimationFrame(loop);})(last);
+
+/* ===== CONVERT ===== */
+let cat='length';
+function fillCat(){const U=CATS[cat].u,opt=U.map((u,i)=>`<option value="${i}">${u}</option>`).join('');
+  $('#from').innerHTML=opt;$('#to').innerHTML=opt;$('#from').value=3;$('#to').value=5;
+  seg($('#cat'),CK,cat,k=>{cat=k;fillCat();});drawEx();}
+function drawEx(){
+  const U=CATS[cat].u,f=+$('#from').value,t=+$('#to').value,s=$('#val').value.trim().replace(',','.');
+  if(!/^\d*\.?\d*$/.test(s)||s===''||s==='.'){$('#res').textContent='Type a positive number, like 2.5 or 340.';return;}
+  let[ip,dp='']=s.split('.');ip=ip.replace(/^0+(?=\d)/,'')||'0';
+  const v=parseFloat(s),cells=Array(7).fill('');
+  for(let i=0;i<ip.length;i++){const c=f-(ip.length-1-i);if(c>=0)cells[c]=ip[i];}
+  for(let i=0;i<dp.length;i++){const c=f+1+i;if(c<=6)cells[c]=dp[i];}
+  const fl=cells.map(c=>c!==''),lo=Math.min(fl.indexOf(true),t),hi=Math.max(fl.lastIndexOf(true),t);
+  let h='<tr>'+U.map((u,i)=>`<th><b>${u}</b>${PRE[i]}</th>`).join('')+'</tr><tr>';
+  for(let i=0;i<7;i++){let c=[],x=cells[i];if(x===''&&i>=lo&&i<=hi){x='0';c.push('z')}
+    if(i===f)c.push('f','pf');if(i===t)c.push('t','pt');h+=`<td class="${c.join(' ')}">${x}</td>`;}
+  $('#pv').innerHTML=h+'</tr>';
+  const n=t-f,s2=Math.abs(n);
+  $('#res').innerHTML=n===0?`Same unit: ${fmt(v)} ${U[f]}.`:`${s2} step${s2>1?'s':''} ${n>0?'right':'left'}: ${n>0?'multiply':'divide'} by ${P(10,s2)}.<br>${fmt(v)} ${U[f]} = <span style="color:var(--teal)">${fmt(v*P(10,n))} ${U[t]}</span>`;
+  $('#all').innerHTML=U.map((u,i)=>`<div class="chip ${i===t?'cur':''}">${fmt(v*P(10,i-f))} ${u}</div>`).join('');
+}
+['val','from','to'].forEach(id=>$('#'+id).addEventListener('input',drawEx));
+
+/* ===== RULER ===== */
+let R={len:0,st:0};
+function newStrip(){R.len=ri(12,135);const m=160-R.len;R.st=$('#rand').checked?ri(0,Math.min(m,40)):0;
+  $('#pos').max=m;$('#pos').value=R.st;$('#rans').value='';$('#rmsg').textContent='';$('#rmsg').className='msg';drawRuler();}
+function drawRuler(){const S=5,X=20,x=X+R.st*S,w=R.len*S;
+  let g=`<rect x="${x}" y="14" width="${w}" height="34" rx="3" fill="#0B7A85" stroke="#16262E" stroke-width="2"/>`;
+  if($('#guide').checked)g+=`<path d="M${x} 48V70M${x+w} 48V70" stroke="#C93C3C" stroke-width="2" stroke-dasharray="4 3"/>`;
+  g+=`<rect x="8" y="66" width="824" height="78" rx="4" fill="#F2C230" stroke="#8A6A00" stroke-width="2"/>`;
+  for(let i=0;i<=160;i++){const px=X+i*S,hh=i%10===0?32:i%5===0?24:14;g+=`<path d="M${px} 66v${hh}" stroke="#4a3a00" stroke-width="${i%10===0?2:1}"/>`;
+    if(i%10===0)g+=`<text x="${px}" y="118" text-anchor="middle" font-size="16" font-weight="700">${i/10}</text>`;}
+  $('#rsv').innerHTML=g;}
+$('#pos').oninput=e=>{R.st=+e.target.value;drawRuler();};$('#guide').onchange=drawRuler;$('#rand').onchange=newStrip;$('#newr').onclick=newStrip;
+$('#rchk').onclick=()=>{const v=parseFloat($('#rans').value),m=$('#rmsg');if(isNaN(v)){m.className='msg no';m.textContent='Type your measurement first.';return;}
+  const mm=$('#runit').value==='cm'?v*10:v,ok=Math.abs(mm-R.len)<.01,a=R.st,b=a+R.len;m.className='msg '+(ok?'ok':'no');
+  m.textContent=ok?`Correct! ${b} mm − ${a} mm = ${R.len} mm = ${fmt(R.len/10)} cm.`:`Not quite. Left end ${fmt(a/10)} cm, right end ${fmt(b/10)} cm. Subtract them. Try guide lines.`;};
+
+/* ===== QUIZ ===== */
+let lvl=1,Q,asked=0,right=0,streak=0,done=false;
+const INFO={1:'Whole numbers, one or two steps.',2:'Decimals, any pair of units.',3:'Area, volume and speed. Area units scale by the square.'};
+const AREA=[['m²','cm²',1e4,'1 m = 100 cm, so 1 m² = 100 × 100 = 10 000 cm². Multiply by 10 000.'],['cm²','mm²',100,'1 cm = 10 mm, so 1 cm² = 10 × 10 = 100 mm². Multiply by 100.'],['km²','m²',1e6,'1 km = 1000 m, so 1 km² = 1 000 000 m². Multiply by 1 000 000.'],['cm²','m²',1e-4,'1 m² = 10 000 cm², so divide by 10 000.'],['mm²','cm²',.01,'1 cm² = 100 mm², so divide by 100.']];
+const VOL=[['L','mL',1000,'1 L = 1000 mL. Multiply by 1000.'],['mL','L',.001,'1000 mL = 1 L. Divide by 1000.'],['cm³','mL',1,'1 cm³ holds exactly 1 mL, so the number stays the same.'],['L','cm³',1000,'1 L = 1000 cm³. Multiply by 1000.'],['m³','L',1000,'1 m³ = 1000 L. Multiply by 1000.'],['L','m³',.001,'1000 L = 1 m³. Divide by 1000.'],['dm³','L',1,'1 dm³ is the same volume as 1 L.']];
+function make(){
+  if(lvl<3){const U=CATS[CK[ri(0,2)][0]].u;let f=ri(0,6),t;
+    if(lvl===1){do t=f+(Math.random()<.5?-1:1)*ri(1,2);while(t<0||t>6);}else{do t=ri(0,6);while(t===f);}
+    const v=lvl===1?ri(1,60):ri(10,9999)/(Math.random()<.5?10:100),n=t-f;
+    return{t:`Convert ${fmt(v)} ${U[f]} to ${U[t]}`,a:v*P(10,n),u:U[t],e:`${U[f]} to ${U[t]} is ${Math.abs(n)} step${Math.abs(n)>1?'s':''} ${n>0?'right':'left'}, so ${n>0?'multiply':'divide'} by ${P(10,Math.abs(n))}.`};}
+  const k=ri(0,3);
+  if(k<2){const A=k?VOL:AREA,r=A[ri(0,A.length-1)],v=ri(1,90)/(Math.random()<.5?1:10);return{t:`Convert ${fmt(v)} ${r[0]} to ${r[1]}`,a:v*r[2],u:r[1],e:r[3]};}
+  if(k===2){const v=[18,36,54,72,90,108,144][ri(0,6)];return{t:`A car drives at ${v} km/h. Speed in m/s?`,a:v/3.6,u:'m/s',e:'1 km/h = 1/3.6 m/s, so divide by 3.6.'};}
+  const v=ri(2,40);return{t:`A cyclist rides at ${v} m/s. Speed in km/h?`,a:v*3.6,u:'km/h',e:'1 m/s = 3.6 km/h, so multiply by 3.6.'};}
+function nextQ(){Q=make();done=false;$('#qt').textContent=Q.t+' = ? '+Q.u;$('#qa').value='';$('#qmsg').textContent='';$('#qmsg').className='msg';$('#qa').focus();}
+function upd(){$('#sc').textContent=`Score: ${right} / ${asked}`;$('#st').textContent=`Streak: ${streak}`;}
+function check(){if(done){nextQ();return;}
+  const v=parseFloat($('#qa').value.replace(',','.')),m=$('#qmsg');if(isNaN(v)){m.className='msg no';m.textContent='Type a number first.';return;}
+  const ok=Math.abs(v-Q.a)<=1e-6*Math.max(1,Math.abs(Q.a));done=true;asked++;if(ok){right++;streak++}else streak=0;
+  m.className='msg '+(ok?'ok':'no');m.textContent=(ok?'Correct! ':`Not quite. The answer is ${fmt(Q.a)} ${Q.u}. `)+Q.e;upd();}
+$('#qchk').onclick=check;$('#qnext').onclick=nextQ;$('#qa').addEventListener('keydown',e=>{if(e.key==='Enter')check();});
+$('#qhint').onclick=()=>{$('#qmsg').className='msg';$('#qmsg').textContent='Hint: '+Q.e.split('.')[0].replace(/, so .*/,'')+'.';};
+seg($('#lvl'),[[1,'Warm-up (Grade 6)'],[2,'Core (Grade 7–8)'],[3,'Challenge (Grade 9–10)']],1,k=>{lvl=+k;$('#lvlinfo').textContent=INFO[lvl];nextQ();});
+
+/* init */
+DRAW.unit();DRAW.ladder();DRAW.area();DRAW.vol();DRAW.cap();DRAW.speed();
+fillCat();newStrip();$('#lvlinfo').textContent=INFO[1];nextQ();upd();
+</script>
+</body>
+</html>
